@@ -1,5 +1,6 @@
 import Link from "next/link";
 import UserButton from "./UserButton";
+import { signIn, signOut } from "@/auth";
 
 export default function Navbar() {
   return (
@@ -15,7 +16,16 @@ export default function Navbar() {
           </Link>
         </ul>
         <div>
-          <UserButton />
+          <UserButton
+            onSignIn={async () => {
+              "use server";
+              signIn();
+            }}
+            onSignOut={async () => {
+              "use server";
+              signOut();
+            }}
+          />
         </div>
       </nav>
     </header>
