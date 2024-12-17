@@ -46,7 +46,7 @@ export default async function RootLayout({
         >
           <Navbar />
           <div className="flex flex-col md:flex-row">
-            <div className="flex flex-grow">{children}</div>
+            <div className="flex-grow">{children}</div>
           </div>
         </SessionProvider>
       </body>
