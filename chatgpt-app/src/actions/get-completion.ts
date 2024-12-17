@@ -1,12 +1,18 @@
 "use server";
 
 import OpeAi from "openai";
+import { testQuery } from "@/db";
+
+testQuery();
+
+import { auth } from "@/auth";
 
 const openai = new OpeAi({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 export async function getCompletion(
+  id: number | null,
   messageHistory: {
     role: "user" | "assistant";
     content: string;
@@ -25,5 +31,22 @@ export async function getCompletion(
     },
   ];
 
-  return messages;
+  const session = await auth();
+
+  let chatId = id;
+
+  // if (!chatId) {
+  //   chatId = await createChat(
+  //     session?.user?.email!,
+  //     messageHistory[0].content,
+  //     messages
+  //   );
+  // } else {
+  //   await updateChat(chatId, messages);
+  // }
+
+  return {
+    messages,
+    id: chatId,
+  };
 }

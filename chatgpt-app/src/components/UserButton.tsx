@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signIn, useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import { Button } from "./ui/button";
 
@@ -24,7 +24,7 @@ export default function UserButton({ onSignOut, onSignIn }: UserButtonProps) {
   const { data: session, status } = useSession();
 
   return (
-    <div>
+    <>
       {status === "authenticated" && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -39,15 +39,15 @@ export default function UserButton({ onSignOut, onSignIn }: UserButtonProps) {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => signOut()}>
+            <DropdownMenuItem onClick={() => onSignOut()}>
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )}
       {status === "unauthenticated" && (
-        <Button onClick={() => signIn()}>Sign in</Button>
+        <Button onClick={() => onSignIn()}>Sign in</Button>
       )}
-    </div>
+    </>
   );
 }

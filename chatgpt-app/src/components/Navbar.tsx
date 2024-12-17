@@ -15,18 +15,17 @@ export default function Navbar() {
             About
           </Link>
         </ul>
-        <div>
-          <UserButton
-            onSignIn={async () => {
-              "use server";
-              signIn();
-            }}
-            onSignOut={async () => {
-              "use server";
-              signOut();
-            }}
-          />
-        </div>
+
+        <UserButton
+          onSignIn={async () => {
+            "use server";
+            await signIn();
+          }}
+          onSignOut={async () => {
+            "use server";
+            await signOut();
+          }}
+        />
       </nav>
     </header>
   );
