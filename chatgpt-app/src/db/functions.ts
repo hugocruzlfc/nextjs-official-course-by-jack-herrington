@@ -68,17 +68,34 @@ export async function createChat(
 export async function getChatsWithMessages(
   userEmail: string
 ): Promise<ChatWithMessages[]> {
-  const { rows: chatsWithMessages } = await sql.query(
-    `SELECT chats.*, messages.*
-     FROM chats
-     LEFT JOIN messages ON chats.id = messages.chat_id
-     WHERE chats.user_email = $1
-     ORDER BY chats.created_at DESC
-     LIMIT 3`,
+  // const { rows: chatsWithMessages } = await sql.query(
+  //   `SELECT chats.*, messages.*
+  //    FROM chats
+  //    LEFT JOIN messages ON chats.id = messages.chat_id
+  //    WHERE chats.user_email = $1
+  //    ORDER BY chats.created_at DESC
+  //    LIMIT 3`,
+  //   [userEmail]
+  // );
+
+  const { rows: chats } = await sql.query(
+    `SELECT * FROM chats WHERE user_email = $1 ORDER BY created_at DESC LIMIT 3`,
     [userEmail]
   );
 
-  return chatsWithMessages as ChatWithMessages[];
+  for (const chat of chats) {
+    const { rows: messages } = await sql.query(
+      `SELECT * FROM messages WHERE chat_id = $1`,
+      [chat.id]
+    );
+    chat.messages = messages.map((msg) => ({
+      ...msg,
+      role: msg.role as "user" | "assistant",
+      content: msg.content,
+    }));
+  }
+
+  return chats as ChatWithMessages[];
 }
 
 export async function getMessages(chatId: number) {

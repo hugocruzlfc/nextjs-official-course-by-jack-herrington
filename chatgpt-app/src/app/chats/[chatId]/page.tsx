@@ -13,6 +13,7 @@ export default async function ChatDetail({
 }) {
   const { chatId } = await params;
   const chat = await getChat(+chatId);
+
   if (!chat) {
     return notFound();
   }

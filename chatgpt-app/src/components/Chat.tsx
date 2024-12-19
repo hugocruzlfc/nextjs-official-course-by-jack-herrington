@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { getCompletion } from "@/actions/get-completion";
 import { useRouter } from "next/navigation";
+import Transcript from "./Transcript";
 
 interface Message {
   role: "user" | "assistant";
@@ -41,24 +42,10 @@ export default function Chat({
   return (
     <>
       <div className="flex flex-col w-full">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={cn(
-              "mb-5 flex flex-col",
-              message.role === "user" ? "items-end" : "items-start"
-            )}
-          >
-            <div
-              className={cn(
-                "rounded-md py-2 px-8",
-                message.role === "user" ? "bg-blue-500" : "bg-gray-400"
-              )}
-            >
-              {message.content}
-            </div>
-          </div>
-        ))}
+        <Transcript
+          messages={messages}
+          truncate={false}
+        />
       </div>
       <div className="flex border-t-2 border-t-gray-500 pt-3 mt-3 w-full">
         <Input
