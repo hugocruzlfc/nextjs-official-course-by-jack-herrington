@@ -4,7 +4,7 @@ import { signIn, signOut } from "@/auth";
 
 export default function Navbar() {
   return (
-    <header className="font-bold bg-green-900 text-2xl text-white p-4 rounded-b-md">
+    <header className="font-bold bg-green-900 text-2xl text-white px-6 py-4">
       <nav className="flex flex-grow justify-between">
         <ul>
           <Link href="/">GPT Chat</Link>

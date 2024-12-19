@@ -40,14 +40,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased px-2 md:px-5`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider
           basePath="/api/auth"
           session={session}
         >
           <Navbar />
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row px-2 md:px-5">
             <div className="flex-grow">{children}</div>
           </div>
         </SessionProvider>

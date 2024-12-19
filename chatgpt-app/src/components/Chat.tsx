@@ -5,22 +5,34 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { getCompletion } from "@/actions/get-completion";
+import { useRouter } from "next/navigation";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-export default function Chat() {
-  const [messages, setMessages] = useState<Message[]>([]);
+export default function Chat({
+  id = null,
+  messages: initialMessages = [],
+}: {
+  id?: number | null;
+  messages?: Message[];
+}) {
+  const router = useRouter();
+  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [message, setMessage] = useState("");
-  const chatId = useRef<number | null>(null);
+  const chatId = useRef<number | null>(id);
 
   const handleOnClick = async () => {
     const completions = await getCompletion(chatId.current, [
       ...messages,
       { role: "user", content: message },
     ]);
+    if (!chatId.current) {
+      router.push(`/chats/${completions.id}`);
+      router.refresh();
+    }
     chatId.current = completions.id;
     setMessage("");
     setMessages(completions.messages);
