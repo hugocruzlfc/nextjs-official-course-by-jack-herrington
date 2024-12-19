@@ -1,11 +1,9 @@
 "use server";
 
 import OpeAi from "openai";
-import { testQuery } from "@/db";
-
-testQuery();
 
 import { auth } from "@/auth";
+import { createChat, updateChat } from "@/db/functions";
 
 const openai = new OpeAi({
   apiKey: process.env.OPENAI_API_KEY,
@@ -35,15 +33,15 @@ export async function getCompletion(
 
   let chatId = id;
 
-  // if (!chatId) {
-  //   chatId = await createChat(
-  //     session?.user?.email!,
-  //     messageHistory[0].content,
-  //     messages
-  //   );
-  // } else {
-  //   await updateChat(chatId, messages);
-  // }
+  if (!chatId) {
+    chatId = await createChat(
+      session?.user?.email!,
+      messageHistory[0].content,
+      messages
+    );
+  } else {
+    await updateChat(chatId, messages);
+  }
 
   return {
     messages,
