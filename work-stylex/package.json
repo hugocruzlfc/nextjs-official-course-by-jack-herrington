@@ -1,0 +1,33 @@
+{
+  "name": "work-stylex",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "rimraf .next",
+    "prebuild": "rimraf .next",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@stylexjs/open-props": "^0.9.3",
+    "@stylexjs/stylex": "^0.9.3",
+    "next": "15.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@stylexjs/babel-plugin": "^0.9.3",
+    "@stylexjs/eslint-plugin": "^0.9.3",
+    "@stylexjs/nextjs-plugin": "^0.9.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.1.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5"
+  }
+}
